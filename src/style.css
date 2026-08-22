@@ -286,28 +286,18 @@ h2 {
     position: relative;
     max-width: 90vw;
     max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: transparent;
     cursor: default;
 }
 
-/* Канвас внутри модалки */
-.modal canvas {
-    max-width: 90vw;
+/* Канвас или изображение внутри модалки */
+.modal-content canvas,
+.modal-content img {
+    display: block;
+    max-width: 100%;
     max-height: 85vh;
     border-radius: 8px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    display: block;
-    margin: auto;
-}
-
-
-
-.modall img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
 }
 
 /* Кнопка закрытия */
