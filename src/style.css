@@ -1,0 +1,634 @@
+/* ========== ПЕРЕМЕННЫЕ ========== */
+:root {
+    --color-primary: #1a73e8;
+    --color-accent: #e94560;
+    --color-dark: #1a1a2e;
+    --color-light: #fafafa;
+    --color-text: #1a1a1a;
+    --color-text-light: #666;
+    --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --container-padding: 5%;
+    --border-radius: 12px;
+    --transition: 0.3s ease;
+}
+
+/* ========== БАЗОВЫЕ СТИЛИ ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    line-height: 1.6;
+    color: var(--color-text);
+    background: var(--color-light);
+    overflow-x: hidden;
+}
+
+/* ========== ШАПКА (адаптивная) ========== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem var(--container-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #eee;
+}
+
+.logo h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.logo p {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+}
+
+.contact-btn {
+    background: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background var(--transition);
+    white-space: nowrap;
+}
+
+.contact-btn:hover {
+    background: #1557b0;
+}
+
+/* ========== ГЛАВНЫЙ КОНТЕЙНЕР ========== */
+.main {
+    display: flow-root;
+}
+
+/* ========== СЕКЦИИ ========== */
+section {
+    padding: 3rem var(--container-padding);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========== ГЕРОЙ (первый экран) ========== */
+.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-dark) 0%, #16213e 100%);
+    color: white;
+    border-radius: 0 0 20px 20px;
+    padding: 3rem var(--container-padding);
+}
+
+.hero h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+}
+
+.hero h2 .highlight {
+    color: var(--color-accent);
+}
+
+.hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+.hero .btn {
+    display: inline-block;
+    background: var(--color-accent);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform var(--transition), background var(--transition);
+}
+
+.hero .btn:hover {
+    background: #c73e56;
+    transform: scale(1.05);
+}
+
+/* ========== ЗАГОЛОВКИ ========== */
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* ========== ПОРТФОЛИО (сетка) ========== */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+.portfolio-item {
+    background: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform var(--transition), box-shadow var(--transition);
+    cursor: pointer;
+    
+    /* ВАЖНО: никаких float, width: 100%, position: absolute */
+    display: flex;
+    flex-direction: column;
+    height: auto; /* или 100%, но тогда нужен align-items: stretch */
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.portfolio-info {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.portfolio-info p {
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+}
+
+/* ========== УСЛУГИ ========== */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.service-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.service-card h3 {
+    margin-bottom: 0.75rem;
+    color: var(--color-primary);
+    font-size: 1.2rem;
+}
+
+.service-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+/* ========== КОНТАКТЫ ========== */
+.contacts {
+    background: var(--color-dark);
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    margin: 1rem auto;
+}
+
+.contacts h2 {
+    color: white;
+}
+
+.contacts-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    padding: 0.7rem 1.25rem;
+    border-radius: 40px;
+    text-decoration: none;
+    color: white;
+    transition: background var(--transition);
+    font-size: 0.9rem;
+}
+
+.contact-link:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* ========== THREE.JS КОНТЕЙНЕР ========== */
+.three-container {
+    width: 100%;
+    height: 50vh;
+    min-height: 350px;
+    background: var(--color-dark);
+    margin: 1rem 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+/* ========== МОДАЛЬНОЕ ОКНО ========== */
+.modal {
+    display: none; /* По умолчанию скрыто */
+    position: fixed; /* Фиксированное позиционирование относительно окна */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92); /* Полупрозрачный чёрный фон */
+    z-index: 9999; /* Поверх всего контента */
+    justify-content: center; /* Центрируем по горизонтали */
+    align-items: center; /* Центрируем по вертикали */
+    cursor: pointer;
+    
+    /* Плавное появление (опционально) */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Когда модалка открыта — показываем */
+.modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Контейнер для контента внутри модалки */
+.modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+}
+
+/* Канвас внутри модалки */
+.modal canvas {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    display: block;
+    margin: auto;
+}
+
+
+
+.modall img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+/* Кнопка закрытия */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.3s;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg);
+}
+
+/* Кнопки навигации */
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.modal-nav-btn {
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.modal-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Счётчик */
+.modal-counter {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    z-index: 10;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* ========== ПОДВАЛ ========== */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--color-text-light);
+    font-size: 0.75rem;
+    border-top: 1px solid #ddd;
+    margin-top: 1rem;
+}
+
+/* ============================================ */
+/* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+/* ============================================ */
+
+/* Для больших экранов */
+@media (min-width: 1200px) {
+    .modal-nav-btn {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 36px !important;
+    }
+}
+
+/* Планшеты и маленькие ноутбуки (до 1024px) */
+@media (max-width: 1024px) {
+    :root {
+        --container-padding: 4%;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .portfolio-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.2rem;
+    }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+    .main {
+        margin-top: 100px; /* Шапка выше на мобильных */
+    }
+    
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 0.8rem var(--container-padding);
+    }
+    
+    .logo h1 {
+        font-size: 1.1rem;
+    }
+    
+    .logo p {
+        font-size: 0.7rem;
+    }
+    
+    .contact-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .hero {
+        padding: 2rem var(--container-padding);
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 0.95rem;
+    }
+    
+    .hero .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    section {
+        padding: 2rem var(--container-padding);
+    }
+    
+    .portfolio-grid {
+        grid-template-columns: 1fr; /* Одна колонка на телефоне */
+        gap: 1rem;
+    }
+    
+    .portfolio-item img {
+        height: 220px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .service-card {
+        padding: 1.2rem;
+    }
+    
+    .contacts-grid {
+        gap: 0.8rem;
+    }
+    
+    .contact-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .three-container {
+        height: 40vh;
+        min-height: 250px;
+    }
+    
+    .modal-nav-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 22px !important;
+    }
+    
+    .modal-close {
+        top: 15px;
+        right: 20px;
+        font-size: 32px;
+    }
+    
+    .modal-counter {
+        bottom: 20px;
+        font-size: 12px;
+        padding: 4px 12px;
+    }
+    
+    .modal canvas {
+        max-width: 95vw;
+        max-height: 80vh;
+    }
+}
+
+/* Очень маленькие телефоны (до 480px) */
+@media (max-width: 480px) {
+    .hero h2 {
+        font-size: 1.3rem;
+    }
+    
+    .hero p {
+        font-size: 0.85rem;
+    }
+    
+    .portfolio-item img {
+        height: 180px;
+    }
+    
+    .service-card h3 {
+        font-size: 1rem;
+    }
+    
+    .service-card p {
+        font-size: 0.8rem;
+    }
+    
+    .contacts-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-link {
+        width: 80%;
+        justify-content: center;
+    }
+    
+    .three-container {
+        height: 35vh;
+        min-height: 200px;
+    }
+}
+
+/* Альбомная ориентация на телефонах */
+@media (max-width: 900px) and (orientation: landscape) {
+    .header {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+    
+    .main {
+        margin-top: 0;
+    }
+    
+    .hero {
+        padding: 1.5rem;
+    }
+    
+    .three-container {
+        height: 60vh;
+    }
+}
+
+/* Планшеты в альбомной ориентации */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Для устройств с сенсорным экраном (убираем hover-эффекты) */
+@media (hover: none) and (pointer: coarse) {
+    .portfolio-item:hover {
+        transform: none;
+    }
+    
+    .btn:hover {
+        transform: none;
+    }
+    
+    .contact-btn:hover {
+        transform: none;
+    }
+}
+
+/* Тёмная тема (если у пользователя включена) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #121212;
+        color: #e0e0e0;
+    }
+    
+    .header {
+        background: rgba(18, 18, 18, 0.95);
+        border-bottom-color: #333;
+    }
+    
+    .portfolio-item,
+    .service-card {
+        background: #1e1e1e;
+    }
+    
+    .portfolio-info p,
+    .service-card p {
+        color: #aaa;
+    }
+    
+    footer {
+        border-top-color: #333;
+    }
+}

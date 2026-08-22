@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Иван Иванов | 3D-моделирование и техническая визуализация</title>
+    <meta name="description" content="Инженерное 3D-моделирование электрошкафов, устройств ABB, промышленных роботов. Техническая визуализация. Подготовка к 3D-печати.">
+    <link rel="icon" type="image/svg+xml" href="/src/assets/favicon.svg">
+</head>
+<body>
+    <div id="app">
+        <!-- Шапка (будет добавлена через JS или отдельным компонентом) -->
+        <header class="header">
+            <div class="logo">
+                <h1>Иван Иванов</h1>
+                <p>3D-моделирование | Техническая визуализация</p>
+            </div>
+            <a href="#contacts" class="contact-btn">Связаться</a>
+        </header>
+        
+        <main class="main">
+            <!-- Герой-секция (можно оставить статичной) -->
+            <section class="hero">
+                <h2>Инженерное <span class="highlight">3D-моделирование</span></h2>
+                <p>Создаю точные 3D-модели электрошкафов, устройств ABB, промышленных роботов. Фотореалистичная визуализация. Подготовка к 3D-печати.</p>
+                <a href="#portfolio" class="btn">Смотреть работы ↓</a>
+            </section>
+
+            <!-- Контейнер для 3D-сцены (опционально) -->
+            <div id="three-canvas" class="three-container"></div>
+
+            <!-- Портфолио (будет заполнено через JS) -->
+            <section id="portfolio" class="portfolio">
+                <h2>Портфолио</h2>
+                <div id="portfolioGrid"></div>
+            </section>
+
+            <!-- Услуги -->
+            <section id="services" class="services">
+                <h2>Что я делаю</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>📐 3D-моделирование</h3>
+                        <p>По чертежам, эскизам, фото. SolidWorks, 3ds Max. Любые форматы: STEP, STL, IGES, OBJ.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>🎨 Техническая визуализация</h3>
+                        <p>Фотореалистичные рендеры для каталогов, презентаций, инструкций. Substance Painter, 3ds Max.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>🖨️ 3D-печать</h3>
+                        <p>Подготовка моделей к печати: разбивка на детали, поддержки, проверка на ошибки. STL, 3MF.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Контакты -->
+            <section id="contacts" class="contacts">
+                <h2>Связаться со мной</h2>
+                <div class="contacts-grid">
+                    <a href="https://t.me/your_nick" class="contact-link" target="_blank">📱 Telegram</a>
+                    <a href="https://wa.me/7XXXXXXXXXX" class="contact-link" target="_blank">💬 WhatsApp</a>
+                    <a href="mailto:your@email.com" class="contact-link">📧 Email</a>
+                    <a href="https://www.avito.ru/user/ваш_id" class="contact-link" target="_blank">📦 Avito</a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 Иван Иванов. 3D-моделирование и техническая визуализация.</p>
+        </footer>
+
+        <!-- Модальное окно -->
+        <div id="imageModal" class="modal">
+            <!-- Кнопка закрытия -->
+            <span class="modal-close">&times;</span>
+            
+            <!-- Основной контент -->
+            <div class="modal-content">
+                <canvas id="modalCanvas"></canvas>
+            </div>
+    
+        <!-- Навигация и счётчик будут добавлены через JS -->
+        </div>
+
+
+
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
