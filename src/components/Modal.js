@@ -33,6 +33,10 @@ export class Modal {
             return;
         }
 
+        // 1. Создаём ЕДИНЫЙ КОНТЕЙНЕР для всего содержимого модалки
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'modal-content'; // Этот класс мы будем стилизовать
+
         // Создаём Canvas
         this.canvas = document.createElement('canvas');
         this.canvas.id = 'modalCanvas';
@@ -41,7 +45,7 @@ export class Modal {
         this.canvas.style.borderRadius = '8px';
         this.canvas.style.display = 'block';
         this.canvas.style.margin = 'auto';
-        this.container.appendChild(this.canvas);
+        contentWrapper.appendChild(this.canvas);
         
         this.ctx = this.canvas.getContext('2d');
 
@@ -68,6 +72,10 @@ export class Modal {
         this.counter.className = 'modal-counter';
         this.container.appendChild(this.counter);
 
+        // 4. Очищаем модалку и добавляем в неё готовый контейнер
+        this.container.innerHTML = ''; // Очищаем от старых элементов
+        this.container.appendChild(contentWrapper);
+
         // Подписка на события
         eventBus.on('modal:open', this.open);
         eventBus.on('modal:close', this.close);
@@ -82,6 +90,7 @@ export class Modal {
         if (this.nextBtn) this.nextBtn.addEventListener('click', this.next);
 
         this.container.style.display = 'none';
+        this.contentContainer = contentWrapper;
         console.log('✅ Modal with Gallery initialized');
     }
     

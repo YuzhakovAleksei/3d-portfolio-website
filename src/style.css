@@ -283,11 +283,14 @@ h2 {
 
 /* Контейнер для контента внутри модалки */
 .modal-content {
-    position: relative;
+   position: relative; /* Для позиционирования кнопок навигации внутри */
     max-width: 90vw;
     max-height: 90vh;
-    background: transparent;
-    cursor: default;
+    display: flex;
+    flex-direction: column; /* Чтобы canvas и навигация встали в колонку */
+    align-items: center;
+    justify-content: center;
+    cursor: default; /* Чтобы клик по контейнеру не закрывал модалку */
 }
 
 /* Канвас или изображение внутри модалки */
