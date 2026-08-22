@@ -2,7 +2,7 @@ import { eventBus } from '../core/eventBus.js';
 
 export class Modal {
     constructor(containerId) {
-        this.container = document.getElementById(containerId);
+        this.container = document.getElementById('imageModal');
         this.canvas = null;
         this.ctx = null;
         this.closeBtn = null;
@@ -96,6 +96,7 @@ export class Modal {
     
     createNavigation() {
         // Контейнер для кнопок
+        console.log('5. Создаём навигацию');
         const navContainer = document.createElement('div');
         navContainer.className = 'modal-nav';
         navContainer.style.cssText = `
@@ -156,6 +157,7 @@ export class Modal {
     }
 
     open(data) {
+        console.log('1. Метод open() вызван с данными:', data);
         if (!data || !data.full) {
             console.warn('Modal: нет данных');
             return;
@@ -180,6 +182,7 @@ export class Modal {
         this.showCurrentImage();
         this.updateCounter();
         this.updateNavButtons();
+        console.log('2. Модалке присвоен display: flex');
     }
     
     showCurrentImage() {
@@ -232,6 +235,7 @@ export class Modal {
     }
     
     renderImage(img) {
+        console.log('3. Начинаем загрузку изображения:', imageSrc);
         const maxWidth = window.innerWidth * 0.9;
         const maxHeight = window.innerHeight * 0.85;
         
@@ -252,6 +256,7 @@ export class Modal {
         
         // Скрываем индикатор загрузки
         this.hideLoader();
+        console.log('4. Изображение загружено и отрисовано');
     }
     
     preloadAdjacent() {

@@ -10,21 +10,21 @@
         "id": 2,
         "title": "Робот ABB IRB 6700",
         "desc": "SolidWorks, 3ds Max",
-        "preview": "/src/assets/img/portfolio/preview/model-2.jpg",
-        "full": "/src/assets/img/portfolio/full/model-2.jpg"
+        "preview": "/src/assets/img/portfolio/preview/PV_Inverter_01.jpg",
+        "full": "/src/assets/img/portfolio/full/PV_Inverter_01.jpg"
     },
     {
         "id": 3,
         "title": "Промышленное устройство",
         "desc": "Фотореалистичный рендер",
-        "preview": "/src/assets/img/portfolio/preview/model-3.jpg",
-        "full": "/src/assets/img/portfolio/full/model-3.jpg"
+        "preview": "/src/assets/img/portfolio/preview/Screwdriver_01.jpg",
+        "full": "/src/assets/img/portfolio/full/Screwdriver_01.jpg"
     },
     {
         "id": 3,
         "title": "Промышленное устройство",
         "desc": "Фотореалистичный рендер",
-        "preview": "/src/assets/img/portfolio/preview/model-3.jpg",
-        "full": "/src/assets/img/portfolio/full/model-3.jpg"
+        "preview": "/src/assets/img/portfolio/preview/Solar-Cabs_1.jpg",
+        "full": "/src/assets/img/portfolio/full/Solar-Cabs_1.jpg"
     }
 ]
