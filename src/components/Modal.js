@@ -95,65 +95,68 @@ export class Modal {
     }
     
     createNavigation() {
-        // Контейнер для кнопок
-        console.log('5. Создаём навигацию');
+        console.log('1. createNavigation() начал работу');
+
+        // 1. Находим или создаём контейнер modal-content
+        let content = this.container.querySelector('.modal-content');
+        if (!content) {
+            console.warn('2. .modal-content не найден, создаём новый');
+            content = document.createElement('div');
+            content.className = 'modal-content';
+            this.container.appendChild(content);
+        } else {
+            console.log('2. .modal-content найден');
+        }
+
+        // 2. Удаляем старую навигацию, если она есть
+        const oldNav = content.querySelector('.modal-nav');
+        if (oldNav) {
+            console.log('3. Удаляем старую навигацию');
+            oldNav.remove();
+        }
+
+        // 3. Создаём контейнер для кнопок
         const navContainer = document.createElement('div');
         navContainer.className = 'modal-nav';
-        navContainer.style.cssText = `
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-            pointer-events: none;
-            z-index: 10;
-        `;
+        console.log('4. Контейнер навигации создан');
         
-        // Предыдущая
-        this.prevBtn = document.createElement('button');
-        this.prevBtn.className = 'modal-nav-btn modal-prev';
-        this.prevBtn.innerHTML = '‹';
-        this.prevBtn.style.cssText = `
-            pointer-events: auto;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 30px;
-            cursor: pointer;
-            transition: background 0.3s;
-        `;
-        this.prevBtn.onmouseover = () => this.prevBtn.style.background = 'rgba(0,0,0,0.8)';
-        this.prevBtn.onmouseout = () => this.prevBtn.style.background = 'rgba(0,0,0,0.5)';
-        
-        // Следующая
-        this.nextBtn = document.createElement('button');
-        this.nextBtn.className = 'modal-nav-btn modal-next';
-        this.nextBtn.innerHTML = '›';
-        this.nextBtn.style.cssText = `
-            pointer-events: auto;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 30px;
-            cursor: pointer;
-            transition: background 0.3s;
-        `;
-        this.nextBtn.onmouseover = () => this.nextBtn.style.background = 'rgba(0,0,0,0.8)';
-        this.nextBtn.onmouseout = () => this.nextBtn.style.background = 'rgba(0,0,0,0.5)';
-        
-        navContainer.appendChild(this.prevBtn);
-        navContainer.appendChild(this.nextBtn);
-        this.container.appendChild(navContainer);
-        this.container.style.position = 'relative';
+        // Создаём кнопку "Назад"
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'modal-nav-btn modal-prev';
+        prevBtn.innerHTML = '‹';
+        console.log('5. Кнопка "Назад" создана');
+
+        // Создаём кнопку "Вперёд"
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'modal-nav-btn modal-next';
+        nextBtn.innerHTML = '›';
+        console.log('5. Кнопка "Вперёд" создана');
+
+        // 6. Добавляем кнопки в контейнер
+        navContainer.appendChild(prevBtn);
+        navContainer.appendChild(nextBtn);
+        console.log('7. Кнопки добавлены в контейнер навигации');
+
+        // 7. Добавляем контейнер навигации в modal-content
+        content.appendChild(navContainer);
+        console.log('8. Контейнер навигации добавлен в .modal-content');
+
+        // 8. Проверяем, что кнопки в DOM
+        const checkNav = content.querySelector('.modal-nav');
+        if (checkNav) {
+            console.log('9. Успех! Навигация добавлена, кнопок внутри:', checkNav.children.length);
+        } else {
+            console.error('10. ОШИБКА: Навигация не найдена в DOM!');
+        }
+
+        // Добавляем кнопки в body (вне модалки, для надёжности)
+        document.body.appendChild(prevBtn);
+        document.body.appendChild(nextBtn);
+
+        // 9. Сохраняем ссылки для методов prev/next
+        this.prevBtn = prevBtn;
+        this.nextBtn = nextBtn;
+        console.log('11. createNavigation() завершил работу');
     }
 
     open(data) {
@@ -235,7 +238,7 @@ export class Modal {
     }
     
     renderImage(img) {
-        console.log('3. Начинаем загрузку изображения:', imageSrc);
+        console.log('3. Начинаем загрузку изображения:', img);
         const maxWidth = window.innerWidth * 0.9;
         const maxHeight = window.innerHeight * 0.85;
         
@@ -361,6 +364,8 @@ export class Modal {
         if (this.ctx) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
+        if (this.prevBtn) this.prevBtn.remove();
+        if (this.nextBtn) this.nextBtn.remove();
     }
 
     handleOutsideClick(event) {

@@ -282,26 +282,24 @@ h2 {
 
 /* Контейнер для содержимого */
 .modal-content {
-    position: relative !important;
-    max-width: 90vw !important;
-    max-height: 90vh !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: transparent !important;
-    z-index: 100000 !important;
-    pointer-events: auto !important;
+    position: relative ;
+    max-width: 90vw ;
+    max-height: 90vh ;
+    display: flex ;
+    flex-direction: column ;
+    align-items: center ;
+    justify-content: center ;
+    background: transparent ;
+    z-index: 100000 ;
+    pointer-events: auto ;
 }
 
 /* Канвас или изображение внутри модалки */
 /* Canvas внутри модалки */
+/* Убедитесь, что Canvas не перекрывает кнопки */
 .modal-content canvas {
-    max-width: 100% !important;
-    max-height: 85vh !important;
-    border-radius: 8px !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
-    pointer-events: auto !important;
+    position: relative;
+    z-index: 1;
 }
 
 .modal-content img {
@@ -340,29 +338,30 @@ h2 {
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
+    z-index: 10000;
     pointer-events: none;
-    z-index: 10;
 }
 
 .modal-nav-btn {
     pointer-events: auto;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
     font-size: 30px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    user-select: none;
+    z-index: 10001;
 }
 
 .modal-nav-btn:hover {
     background: rgba(255, 255, 255, 0.2);
+    border-color: white;
     transform: scale(1.1);
 }
 
