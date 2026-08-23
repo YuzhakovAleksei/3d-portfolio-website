@@ -2,7 +2,7 @@ import { eventBus } from '../core/eventBus.js';
 
 export class Modal {
     constructor(containerId) {
-        this.container = document.getElementById(containerId);
+        this.container = document.getElementById('imageModal');
         this.canvas = null;
         this.ctx = null;
         this.closeBtn = null;
@@ -28,12 +28,16 @@ export class Modal {
     }
 
     init() {
-        if (!this.container) {
+    if (!this.container) {
             console.warn('Modal: контейнер не найден');
             return;
         }
 
-        // Создаём Canvas
+        // 1. Создаём ЕДИНЫЙ КОНТЕЙНЕР для всего содержимого модалки
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'modal-content';
+
+        // 2. Создаём Canvas и добавляем в contentWrapper
         this.canvas = document.createElement('canvas');
         this.canvas.id = 'modalCanvas';
         this.canvas.style.maxWidth = '90%';
@@ -41,8 +45,7 @@ export class Modal {
         this.canvas.style.borderRadius = '8px';
         this.canvas.style.display = 'block';
         this.canvas.style.margin = 'auto';
-        this.container.appendChild(this.canvas);
-        
+        contentWrapper.appendChild(this.canvas);
         this.ctx = this.canvas.getContext('2d');
 
         // Отключаем контекстное меню на Canvas
@@ -51,7 +54,7 @@ export class Modal {
             return false;
         });
 
-        // Кнопка закрытия
+        // 3. Кнопка закрытия
         this.closeBtn = this.container.querySelector('.modal-close');
         if (!this.closeBtn) {
             this.closeBtn = document.createElement('span');
@@ -59,14 +62,24 @@ export class Modal {
             this.closeBtn.innerHTML = '&times;';
             this.container.prepend(this.closeBtn);
         }
-        
-        // Кнопки навигации (создаём, если их нет)
+
+        // 4. ОЧИЩАЕМ контейнер (теперь без удаления навигации)
+        this.container.innerHTML = ''; // ← ЭТУ СТРОКУ НАДО УБРАТЬ!
+
+        // 5. Добавляем contentWrapper
+        this.container.appendChild(contentWrapper);
+
+        // 6. Создаём навигацию (она будет добавлена в contentWrapper)
         this.createNavigation();
 
-        // Счётчик
+        // 7. Счётчик
         this.counter = document.createElement('div');
         this.counter.className = 'modal-counter';
         this.container.appendChild(this.counter);
+
+        // 4. Очищаем модалку и добавляем в неё готовый контейнер
+        //this.container.innerHTML = ''; // Очищаем от старых элементов
+        this.container.appendChild(contentWrapper);
 
         // Подписка на события
         eventBus.on('modal:open', this.open);
@@ -82,71 +95,56 @@ export class Modal {
         if (this.nextBtn) this.nextBtn.addEventListener('click', this.next);
 
         this.container.style.display = 'none';
+        this.contentContainer = contentWrapper;
         console.log('✅ Modal with Gallery initialized');
     }
     
     createNavigation() {
-        // Контейнер для кнопок
+        console.log('1. createNavigation() начал работу');
+
+        // Находим контейнер modal-content
+        let content = this.container.querySelector('.modal-content');
+        if (!content) {
+            console.warn('2. .modal-content не найден, создаём новый');
+            content = document.createElement('div');
+            content.className = 'modal-content';
+            this.container.appendChild(content);
+        } else {
+            console.log('2. .modal-content найден');
+        }
+
+        // Удаляем старую навигацию
+        const oldNav = content.querySelector('.modal-nav');
+        if (oldNav) oldNav.remove();
+
+        // Создаём контейнер для кнопок
         const navContainer = document.createElement('div');
         navContainer.className = 'modal-nav';
-        navContainer.style.cssText = `
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-            pointer-events: none;
-            z-index: 10;
-        `;
-        
-        // Предыдущая
-        this.prevBtn = document.createElement('button');
-        this.prevBtn.className = 'modal-nav-btn modal-prev';
-        this.prevBtn.innerHTML = '‹';
-        this.prevBtn.style.cssText = `
-            pointer-events: auto;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 30px;
-            cursor: pointer;
-            transition: background 0.3s;
-        `;
-        this.prevBtn.onmouseover = () => this.prevBtn.style.background = 'rgba(0,0,0,0.8)';
-        this.prevBtn.onmouseout = () => this.prevBtn.style.background = 'rgba(0,0,0,0.5)';
-        
-        // Следующая
-        this.nextBtn = document.createElement('button');
-        this.nextBtn.className = 'modal-nav-btn modal-next';
-        this.nextBtn.innerHTML = '›';
-        this.nextBtn.style.cssText = `
-            pointer-events: auto;
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 30px;
-            cursor: pointer;
-            transition: background 0.3s;
-        `;
-        this.nextBtn.onmouseover = () => this.nextBtn.style.background = 'rgba(0,0,0,0.8)';
-        this.nextBtn.onmouseout = () => this.nextBtn.style.background = 'rgba(0,0,0,0.5)';
-        
-        navContainer.appendChild(this.prevBtn);
-        navContainer.appendChild(this.nextBtn);
-        this.container.appendChild(navContainer);
-        this.container.style.position = 'relative';
+
+        // Создаём кнопки
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'modal-nav-btn modal-prev';
+        prevBtn.innerHTML = '‹';
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'modal-nav-btn modal-next';
+        nextBtn.innerHTML = '›';
+
+        // Добавляем кнопки в контейнер
+        navContainer.appendChild(prevBtn);
+        navContainer.appendChild(nextBtn);
+
+        // Добавляем контейнер навигации в modal-content
+        content.appendChild(navContainer);
+
+        // Сохраняем ссылки
+        this.prevBtn = prevBtn;
+        this.nextBtn = nextBtn;
+
+        console.log('createNavigation() завершил работу');
     }
 
     open(data) {
+        console.log('1. Метод open() вызван с данными:', data);
         if (!data || !data.full) {
             console.warn('Modal: нет данных');
             return;
@@ -171,6 +169,7 @@ export class Modal {
         this.showCurrentImage();
         this.updateCounter();
         this.updateNavButtons();
+        console.log('2. Модалке присвоен display: flex');
     }
     
     showCurrentImage() {
@@ -223,6 +222,7 @@ export class Modal {
     }
     
     renderImage(img) {
+        console.log('3. Начинаем загрузку изображения:', img);
         const maxWidth = window.innerWidth * 0.9;
         const maxHeight = window.innerHeight * 0.85;
         
@@ -243,6 +243,7 @@ export class Modal {
         
         // Скрываем индикатор загрузки
         this.hideLoader();
+        console.log('4. Изображение загружено и отрисовано');
     }
     
     preloadAdjacent() {
@@ -347,6 +348,8 @@ export class Modal {
         if (this.ctx) {
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         }
+        if (this.prevBtn) this.prevBtn.remove();
+        if (this.nextBtn) this.nextBtn.remove();
     }
 
     handleOutsideClick(event) {
