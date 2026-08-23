@@ -28,16 +28,16 @@ export class Modal {
     }
 
     init() {
-        if (!this.container) {
+    if (!this.container) {
             console.warn('Modal: контейнер не найден');
             return;
         }
 
         // 1. Создаём ЕДИНЫЙ КОНТЕЙНЕР для всего содержимого модалки
         const contentWrapper = document.createElement('div');
-        contentWrapper.className = 'modal-content'; // Этот класс мы будем стилизовать
+        contentWrapper.className = 'modal-content';
 
-        // Создаём Canvas
+        // 2. Создаём Canvas и добавляем в contentWrapper
         this.canvas = document.createElement('canvas');
         this.canvas.id = 'modalCanvas';
         this.canvas.style.maxWidth = '90%';
@@ -46,7 +46,6 @@ export class Modal {
         this.canvas.style.display = 'block';
         this.canvas.style.margin = 'auto';
         contentWrapper.appendChild(this.canvas);
-        
         this.ctx = this.canvas.getContext('2d');
 
         // Отключаем контекстное меню на Canvas
@@ -55,7 +54,7 @@ export class Modal {
             return false;
         });
 
-        // Кнопка закрытия
+        // 3. Кнопка закрытия
         this.closeBtn = this.container.querySelector('.modal-close');
         if (!this.closeBtn) {
             this.closeBtn = document.createElement('span');
@@ -63,17 +62,23 @@ export class Modal {
             this.closeBtn.innerHTML = '&times;';
             this.container.prepend(this.closeBtn);
         }
-        
-        // Кнопки навигации (создаём, если их нет)
+
+        // 4. ОЧИЩАЕМ контейнер (теперь без удаления навигации)
+        this.container.innerHTML = ''; // ← ЭТУ СТРОКУ НАДО УБРАТЬ!
+
+        // 5. Добавляем contentWrapper
+        this.container.appendChild(contentWrapper);
+
+        // 6. Создаём навигацию (она будет добавлена в contentWrapper)
         this.createNavigation();
 
-        // Счётчик
+        // 7. Счётчик
         this.counter = document.createElement('div');
         this.counter.className = 'modal-counter';
         this.container.appendChild(this.counter);
 
         // 4. Очищаем модалку и добавляем в неё готовый контейнер
-        this.container.innerHTML = ''; // Очищаем от старых элементов
+        //this.container.innerHTML = ''; // Очищаем от старых элементов
         this.container.appendChild(contentWrapper);
 
         // Подписка на события
@@ -97,7 +102,7 @@ export class Modal {
     createNavigation() {
         console.log('1. createNavigation() начал работу');
 
-        // 1. Находим или создаём контейнер modal-content
+        // Находим контейнер modal-content
         let content = this.container.querySelector('.modal-content');
         if (!content) {
             console.warn('2. .modal-content не найден, создаём новый');
@@ -108,55 +113,34 @@ export class Modal {
             console.log('2. .modal-content найден');
         }
 
-        // 2. Удаляем старую навигацию, если она есть
+        // Удаляем старую навигацию
         const oldNav = content.querySelector('.modal-nav');
-        if (oldNav) {
-            console.log('3. Удаляем старую навигацию');
-            oldNav.remove();
-        }
+        if (oldNav) oldNav.remove();
 
-        // 3. Создаём контейнер для кнопок
+        // Создаём контейнер для кнопок
         const navContainer = document.createElement('div');
         navContainer.className = 'modal-nav';
-        console.log('4. Контейнер навигации создан');
-        
-        // Создаём кнопку "Назад"
+
+        // Создаём кнопки
         const prevBtn = document.createElement('button');
         prevBtn.className = 'modal-nav-btn modal-prev';
         prevBtn.innerHTML = '‹';
-        console.log('5. Кнопка "Назад" создана');
-
-        // Создаём кнопку "Вперёд"
         const nextBtn = document.createElement('button');
         nextBtn.className = 'modal-nav-btn modal-next';
         nextBtn.innerHTML = '›';
-        console.log('5. Кнопка "Вперёд" создана');
 
-        // 6. Добавляем кнопки в контейнер
+        // Добавляем кнопки в контейнер
         navContainer.appendChild(prevBtn);
         navContainer.appendChild(nextBtn);
-        console.log('7. Кнопки добавлены в контейнер навигации');
 
-        // 7. Добавляем контейнер навигации в modal-content
+        // Добавляем контейнер навигации в modal-content
         content.appendChild(navContainer);
-        console.log('8. Контейнер навигации добавлен в .modal-content');
 
-        // 8. Проверяем, что кнопки в DOM
-        const checkNav = content.querySelector('.modal-nav');
-        if (checkNav) {
-            console.log('9. Успех! Навигация добавлена, кнопок внутри:', checkNav.children.length);
-        } else {
-            console.error('10. ОШИБКА: Навигация не найдена в DOM!');
-        }
-
-        // Добавляем кнопки в body (вне модалки, для надёжности)
-        document.body.appendChild(prevBtn);
-        document.body.appendChild(nextBtn);
-
-        // 9. Сохраняем ссылки для методов prev/next
+        // Сохраняем ссылки
         this.prevBtn = prevBtn;
         this.nextBtn = nextBtn;
-        console.log('11. createNavigation() завершил работу');
+
+        console.log('createNavigation() завершил работу');
     }
 
     open(data) {
